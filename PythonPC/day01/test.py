@@ -18,6 +18,12 @@ response.encoding = "utf-8"
 info = response.text
 # print(info)
 infos = re.findall(r'<a href="/douyin/promotion/g/(3.*)" target="_blank">', info)
-with open("商家编号.txt", "w", encoding="utf-8") as f:
-    for i in infos:
-        f.write(i + "\n")
+
+base_shop_url = "https://ec.snssdk.com/product/fxgajaxstaticitem?id={}&b_type_new=0&device_id=0"
+for sjid in infos:
+    shop_url = base_shop_url.format(sjid)
+    response = requests.get(shop_url, proxies=proxies, headers=headers)
+    response.encoding = "utf-8"
+    shop = response.text
+    shop_name = re.findall(r'"shop_name":"()"', shop)
+    shop_tel = re.findall(r'"shop_tel":"()"', shop)
