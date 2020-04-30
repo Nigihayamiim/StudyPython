@@ -1,6 +1,0 @@
-f = open('a', 'r')
-line = f.readlines()
-f.close()
-f = open('copy_a', 'w')
-f.writelines(line)
-f.close()
