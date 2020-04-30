@@ -26,7 +26,7 @@ class CrawlInfo1(Thread):
                 response.encoding = "utf-8"
                 info = response.text
                 # print(info)
-                infos = re.findall(r'<a href="/douyin/promotion/g/(33.*)" target="_blank">', info)
+                infos = re.findall(r'<a href="/douyin/promotion/g/(\d{19})" target="_blank">', info)
                 for shop_id in infos:
                     shop_url_queue.put(base_shop_url.format(shop_id))
 
@@ -50,7 +50,7 @@ class CrawlInfo2(Thread):
                     response.encoding = "utf-8"
                     shop = response.text
                     shop_name = re.findall(r'"shop_name":"(.*?)"', shop)
-                    shop_tel = re.findall(r'"shop_tel":"(^1\d+)', shop)
+                    shop_tel = re.findall(r'"shop_tel":"(1\d+)', shop)
                     product_id = re.findall(r'"product_id":"(\d+)', shop)
                     if len(shop_tel):
                         f.write(shop_tel[0] + "\n")
