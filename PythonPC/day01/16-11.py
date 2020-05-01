@@ -1,10 +1,13 @@
+import telnetlib
+
 import requests
 from fake_useragent import UserAgent
 
-url = "http://httpbin.org/get"
+url = "https://httpbin.org/ip"
 
 proxies = {
-    "http": "http://117.88.4.91:3000"
+    "http": "http://127.0.0.1:1080",
+    "https": "http://127.0.0.1:1080"
 }
 
 headers = {
@@ -13,3 +16,4 @@ headers = {
 
 response = requests.get(url, proxies=proxies, headers=headers)
 print(response.text)
+

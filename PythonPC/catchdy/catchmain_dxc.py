@@ -10,14 +10,15 @@ class CrawlInfo1(Thread):
     def __init__(self, url_queue):
         Thread.__init__(self)
         self.url_queue = url_queue
-
     def run(self):
         headers = {
             "User-Agent": UserAgent().chrome,
-            "Cookie": "_ga=GA1.2.1891294568.1587479976; __gads=ID=196a438dbf4084b2:T=1587480069:S=ALNI_MY-q1HznH1BF4_h56rL3jj0auybag; _gid=GA1.2.530615551.1588166539; Hm_lvt_09720a8dd79381f0fd2793fad156ddfa=1588219809,1588221051,1588227194,1588231131; remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d=eyJpdiI6ImVUdGJTdjU0ZmRcL09LWWZ5eHFFRVF3PT0iLCJ2YWx1ZSI6ImNWakJ0NE82YWU2a0o3NUNVNHIwcnFFeDdiY1BVNGxGTm9kVXA0Q3JoZTJPUVk4Sk9ocExCVG9SVFRRR1p6bm1STVwvV3BNZW5cL0tiUklZM3FGTmtiKzZ4Y0lOdWNDbUs2b3ZcL2JSanV2RnRVZm9YeWozc21ZQUk0MytrYlJzWEM3Q09IdmhZUURcLzV1aUJCa0tObTF0WGc9PSIsIm1hYyI6IjlkNzkzODYxNGI2ZWUxZjlmZjA1MmYxN2RlM2Y0OTIwZDFhZDBhOTljZGM0NTIzYTIxZWJjYjBjZjhhN2YzZWIifQ%3D%3D; XSRF-TOKEN=eyJpdiI6ImJmKzhscE94blhBdDFwSUhPa1wvSzJ3PT0iLCJ2YWx1ZSI6IldrQ3lPblQ0YVUrSkp5cWxJR1JMWmI1VVhhQWlsczFONUdEQ0UwWFwvMVRaU1ZsUFNENjdPZ2R0R3k3QWRzRGlBIiwibWFjIjoiNDczMzMyNjA4ZGNkYjA0NzRlNjg2NDQ0ZDc2Y2RhOWNjNjMxNjk4ZjZhY2UwYWIwMmJlZTg2MjJlMWM0NWVmMCJ9; toobigdata_session=eyJpdiI6ImdEcnZjWDJ0QVVYMDdpemhTV2t6MEE9PSIsInZhbHVlIjoiK2lrV0ZjU00wXC8ycUNkVktYcnpzdEkrN1h0bFAxdUJWSkNYejB0R1NcL0NLakY2akN6SjdyOVlxZWRKQXk0OXc0IiwibWFjIjoiYWQ5ZDU5ODA3NTM1YzE4YmY0YzA1ZDg4YmQ1MmFiYTc0NjhhMzIyNWIxZTk2OWNkNjcwMTEwY2RjMDY0OGM1ZiJ9; Hm_lpvt_09720a8dd79381f0fd2793fad156ddfa=1588237124; Hm_cv_09720a8dd79381f0fd2793fad156ddfa=1*email*odgLGv-lhihzzW64F3LcP3Xc5JFg%40wechat.com!*!*!1*role*free; _gat_gtag_UA_8981755_3=1"
+            "Cookie": "_ga=GA1.2.1891294568.1587479976; __gads=ID=196a438dbf4084b2:T=1587480069:S=ALNI_MY-q1HznH1BF4_h56rL3jj0auybag; _gid=GA1.2.530615551.1588166539; Hm_lvt_09720a8dd79381f0fd2793fad156ddfa=1588302176,1588303634,1588312427,1588324632; remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d=eyJpdiI6ImpXK1poZnFFQ3FIejJLclJaUEFwd3c9PSIsInZhbHVlIjoiREFoNTJwK3NNb2Q3UFBNS1FEdUhGbytwb0s1T25SeG12b2xoUVwveEE0S3VwdWUxVkRtK0tjY2FnK3RNWEtScWFibXRLSXJMWFZZeGN6bjFqWmFET3FLTUpIRmgyd2E4TzZmSE0xZGI2RytwN1wvQVVFeFNLeWRwNHgxXC85dzU3YkVFNHZmN3c2OVVPWWJWRXpKMTEyUGl3PT0iLCJtYWMiOiI1ZGY0OWI4MGMwMjE1MDk4ZTlmNDQ4MzEyMDA2N2ZhOGZmOWU5M2QwZDUxNDNmZmViODUxNTc0NmE2ODMxYmI4In0%3D; Hm_cv_09720a8dd79381f0fd2793fad156ddfa=1*email*luantao985544%40163.com!*!*!1*role*free; XSRF-TOKEN=eyJpdiI6ImpTMjNJWERTQWUzOEhNd01LVDdyMEE9PSIsInZhbHVlIjoiT2ZTM2E1RytIUmVBeFwvS2p4RSttVUlHWGUyNjlGY3V4cWNcL1NTeHoyTXoyazAxT0QwTkdzN3pRNHVyS3pQa1RuIiwibWFjIjoiNjVjODcxNzRiYjMyMmRlNjY3MjdiNDVlMWViNDY5ZmUyOTIxN2E2NmY2OTExNGI4YTMwM2NiZTdmMjFiMTNiMiJ9; toobigdata_session=eyJpdiI6IjRTbVdnVGFuSElnTkxjWnBGNzlcL0V3PT0iLCJ2YWx1ZSI6IjZQc1hhXC81TzVZdUdEZnBRSXphZit5WURcL2w4M3IrSmgrZ3hRZ0llOFJHVUc2OHJvZUM4d3lpaWNkUWkza2NPYyIsIm1hYyI6IjRiMzI3NDZhNzcyZjU5YzA3NmYyYzNhNjAyNjhkMDQ4NjM3ODYyYTg4ZGYxZmQ0Y2YzMWZkOWZjMDFiMTE3NDAifQ%3D%3D; Hm_lpvt_09720a8dd79381f0fd2793fad156ddfa=1588324695"
+
         }
         proxies = {
-            "http": "http://117.88.176.145:3000"
+            "http": "http://127.0.0.1:1080",
+            "https": "http://127.0.0.1:1080"
         }
         num = 1
         while not self.url_queue.empty():
@@ -35,23 +36,31 @@ class CrawlInfo1(Thread):
 
 
 class CrawlInfo2(Thread):
-    def __init__(self, shop_url_queue, filename):
+    def __init__(self, shop_url_queue, filename, end_no, start_no):
         Thread.__init__(self)
         self.shop_url_queue = shop_url_queue
         self.filename = filename
+        self.end_no = end_no
+        self.start_no = start_no
 
     def run(self):
         headers = {
             "User-Agent": UserAgent().chrome
         }
         proxies = {
-            "http": "http://117.88.176.145:3000"
+            "http": "http://127.0.0.1:1080",
+            "https": "http://127.0.0.1:1080"
         }
         with open(self.filename, "a", encoding="utf-8") as f:
             num = 1
+            count = 1
             while not self.shop_url_queue.empty():
-                response = requests.get(self.shop_url_queue.get(), proxies=proxies, headers=headers)
-                if response.status_code == 200:
+                shop_url = self.shop_url_queue.get()
+                response = requests.get(shop_url, headers=headers, proxies=proxies)
+                code = response.status_code
+                print("这是第"+str(count)+"条数据,状态码为:"+str(code)+shop_url)
+                count += 1
+                if code == 200:
                     response.encoding = "utf-8"
                     shop = response.text
                     shop_name = re.findall(r'"shop_name":"(.*?)"', shop)
@@ -61,16 +70,17 @@ class CrawlInfo2(Thread):
                         f.write(shop_tel[0] + "\n")
                         print("已收集" + str(num) + "条数据")
                         num += 1
-
+            print(str(start_no)+"页到"+str(end_no)+"页的内容搜集完毕")
 
 if __name__ == '__main__':
     base_url = "https://toobigdata.com/douyin/promotions?page={}"
     base_shop_url = "https://ec.snssdk.com/product/fxgajaxstaticitem?id={}&b_type_new=0&device_id=0"
     url_queue = Queue()
     shop_url_queue = Queue()
-    start_no = 170
-    filename = "2020-4-30_1-170的内容.txt"
-    for pn in range(start_no, start_no+30):
+    start_no = 295
+    end_no = start_no + 5
+    filename = "2020-5-1_1-300的内容.txt"
+    for pn in range(start_no, end_no):
         url_queue.put(base_url.format(pn))
 
     # crawl1_list = []
@@ -88,5 +98,5 @@ if __name__ == '__main__':
     crawl1 = CrawlInfo1(url_queue)
     crawl1.start()
     crawl1.join()
-    crawl2 = CrawlInfo2(shop_url_queue, filename)
+    crawl2 = CrawlInfo2(shop_url_queue, filename, end_no, start_no)
     crawl2.start()
