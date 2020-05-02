@@ -1,7 +1,8 @@
 import re
 from queue import Queue
 from threading import Thread
-
+from time import sleep
+from random import randint
 import requests
 from fake_useragent import UserAgent
 
@@ -13,26 +14,29 @@ class CrawlInfo1(Thread):
     def run(self):
         headers = {
             "User-Agent": UserAgent().chrome,
-            "Cookie": "_ga=GA1.2.1891294568.1587479976; __gads=ID=196a438dbf4084b2:T=1587480069:S=ALNI_MY-q1HznH1BF4_h56rL3jj0auybag; _gid=GA1.2.530615551.1588166539; Hm_lvt_09720a8dd79381f0fd2793fad156ddfa=1588302176,1588303634,1588312427,1588324632; remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d=eyJpdiI6ImpXK1poZnFFQ3FIejJLclJaUEFwd3c9PSIsInZhbHVlIjoiREFoNTJwK3NNb2Q3UFBNS1FEdUhGbytwb0s1T25SeG12b2xoUVwveEE0S3VwdWUxVkRtK0tjY2FnK3RNWEtScWFibXRLSXJMWFZZeGN6bjFqWmFET3FLTUpIRmgyd2E4TzZmSE0xZGI2RytwN1wvQVVFeFNLeWRwNHgxXC85dzU3YkVFNHZmN3c2OVVPWWJWRXpKMTEyUGl3PT0iLCJtYWMiOiI1ZGY0OWI4MGMwMjE1MDk4ZTlmNDQ4MzEyMDA2N2ZhOGZmOWU5M2QwZDUxNDNmZmViODUxNTc0NmE2ODMxYmI4In0%3D; Hm_cv_09720a8dd79381f0fd2793fad156ddfa=1*email*luantao985544%40163.com!*!*!1*role*free; XSRF-TOKEN=eyJpdiI6ImpTMjNJWERTQWUzOEhNd01LVDdyMEE9PSIsInZhbHVlIjoiT2ZTM2E1RytIUmVBeFwvS2p4RSttVUlHWGUyNjlGY3V4cWNcL1NTeHoyTXoyazAxT0QwTkdzN3pRNHVyS3pQa1RuIiwibWFjIjoiNjVjODcxNzRiYjMyMmRlNjY3MjdiNDVlMWViNDY5ZmUyOTIxN2E2NmY2OTExNGI4YTMwM2NiZTdmMjFiMTNiMiJ9; toobigdata_session=eyJpdiI6IjRTbVdnVGFuSElnTkxjWnBGNzlcL0V3PT0iLCJ2YWx1ZSI6IjZQc1hhXC81TzVZdUdEZnBRSXphZit5WURcL2w4M3IrSmgrZ3hRZ0llOFJHVUc2OHJvZUM4d3lpaWNkUWkza2NPYyIsIm1hYyI6IjRiMzI3NDZhNzcyZjU5YzA3NmYyYzNhNjAyNjhkMDQ4NjM3ODYyYTg4ZGYxZmQ0Y2YzMWZkOWZjMDFiMTE3NDAifQ%3D%3D; Hm_lpvt_09720a8dd79381f0fd2793fad156ddfa=1588324695"
+            "Cookie": "_ga=GA1.2.1891294568.1587479976; __gads=ID=196a438dbf4084b2:T=1587480069:S=ALNI_MY-q1HznH1BF4_h56rL3jj0auybag; _gid=GA1.2.530615551.1588166539; remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d=eyJpdiI6ImpXK1poZnFFQ3FIejJLclJaUEFwd3c9PSIsInZhbHVlIjoiREFoNTJwK3NNb2Q3UFBNS1FEdUhGbytwb0s1T25SeG12b2xoUVwveEE0S3VwdWUxVkRtK0tjY2FnK3RNWEtScWFibXRLSXJMWFZZeGN6bjFqWmFET3FLTUpIRmgyd2E4TzZmSE0xZGI2RytwN1wvQVVFeFNLeWRwNHgxXC85dzU3YkVFNHZmN3c2OVVPWWJWRXpKMTEyUGl3PT0iLCJtYWMiOiI1ZGY0OWI4MGMwMjE1MDk4ZTlmNDQ4MzEyMDA2N2ZhOGZmOWU5M2QwZDUxNDNmZmViODUxNTc0NmE2ODMxYmI4In0%3D; Hm_cv_09720a8dd79381f0fd2793fad156ddfa=1*email*luantao985544%40163.com!*!*!1*role*free; Hm_lvt_09720a8dd79381f0fd2793fad156ddfa=1588389541,1588393188,1588402669,1588422276; XSRF-TOKEN=eyJpdiI6Ik1PbUplNk4xakFsQzl1bmVhRzdYOEE9PSIsInZhbHVlIjoiRWhjNUtEWUNzWm9JRmYyZUMxTU9TWDA1dzE1ZzFDc1Y5YlZCQUJwMWIzKzE1cGc4bmVHYmNsRHhMNHFEMkc2TiIsIm1hYyI6ImZiZWI2NzdkYzM3M2JmN2YzNzMyM2JiMTFjZjUzNDc2MDRkNWE0Zjg4NWM0YThmNThjNTJiY2IyMmFjNzk4ZDMifQ%3D%3D; toobigdata_session=eyJpdiI6Inoyb01wVzNuK1R5dnY1MEtOQW4zaGc9PSIsInZhbHVlIjoiU2VTZGlhY1hCZkNNdFl6eWEySmQ2cDNDRGVwazdOc2lGak5NM3JoRExvMzdVakVGZTZHb2FOSFBNZ2ZTY1B3RyIsIm1hYyI6IjZmMjZkZDc3NWJmODk3ZGVjMGFlYTkyYzE0MzBiMTQ5ZWI1MmNiMGIyNzA1ZTQ1NDBlYmU3NDI4ZDJlMDNhOWQifQ%3D%3D; Hm_lpvt_09720a8dd79381f0fd2793fad156ddfa=1588424194; _gat_gtag_UA_8981755_3=1"
 
         }
         proxies = {
-            "http": "http://127.0.0.1:1080",
-            "https": "http://127.0.0.1:1080"
+            "http": "http://fqcs1:fqcs1@106.4.212.228:65000",
+            "https": "http://fqcs1:fqcs1@106.4.212.228:65000"
         }
-        num = 1
-        while not self.url_queue.empty():
-            response = requests.get(self.url_queue.get(), proxies=proxies, headers=headers)
-            if response.status_code == 200:
-                response.encoding = "utf-8"
-                info = response.text
-                # print(info)
-                infos = re.findall(r'<div class="col-md-2">\s+<a href="/douyin/promotion/g/(\d{19})" target="_blank"',
-                                   info)
-                for shop_id in infos:
-                    shop_url_queue.put(base_shop_url.format(shop_id))
-                print("第" + str(num) + "页")
-                num += 1
+
+        with open("商品id.txt", "a", encoding="utf-8") as f:
+            num = 1
+            while not self.url_queue.empty():
+                response = requests.get(self.url_queue.get(), proxies=proxies, headers=headers)
+                if response.status_code == 200:
+                    response.encoding = "utf-8"
+                    info = response.text
+                    # print(info)
+                    infos = re.findall(r'<div class="col-md-2">\s+<a href="/douyin/promotion/g/(\d{19})" target="_blank"',
+                                       info)
+                    for shop_id in infos:
+                        f.write(shop_id + "\n")
+                        shop_url_queue.put(base_shop_url.format(shop_id))
+                    print("第" + str(num) + "页")
+                    num += 1
 
 
 class CrawlInfo2(Thread):
@@ -48,8 +52,8 @@ class CrawlInfo2(Thread):
             "User-Agent": UserAgent().chrome
         }
         proxies = {
-            "http": "http://127.0.0.1:1080",
-            "https": "http://127.0.0.1:1080"
+            "http": "http://fqcs1:fqcs1@106.4.212.228:65000",
+            "https": "http://fqcs1:fqcs1@106.4.212.228:65000"
         }
         with open(self.filename, "a", encoding="utf-8") as f:
             num = 1
@@ -58,7 +62,7 @@ class CrawlInfo2(Thread):
                 shop_url = self.shop_url_queue.get()
                 response = requests.get(shop_url, headers=headers, proxies=proxies)
                 code = response.status_code
-                print("这是第"+str(count)+"条数据,状态码为:"+str(code)+shop_url)
+                print("这是第"+str(count)+"条数据,地址为:"+shop_url)
                 count += 1
                 if code == 200:
                     response.encoding = "utf-8"
@@ -77,9 +81,9 @@ if __name__ == '__main__':
     base_shop_url = "https://ec.snssdk.com/product/fxgajaxstaticitem?id={}&b_type_new=0&device_id=0"
     url_queue = Queue()
     shop_url_queue = Queue()
-    start_no = 295
+    start_no = 445
     end_no = start_no + 5
-    filename = "2020-5-1_1-300的内容.txt"
+    filename = "2020-5-02_300-420的内容.txt"
     for pn in range(start_no, end_no):
         url_queue.put(base_url.format(pn))
 

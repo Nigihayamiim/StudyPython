@@ -6,8 +6,8 @@ from fake_useragent import UserAgent
 url = "https://httpbin.org/ip"
 
 proxies = {
-    "http": "http://127.0.0.1:1080",
-    "https": "http://127.0.0.1:1080"
+    "http": "http://fqcs1:fqcs1@106.4.212.228:65000",
+    "https": "http://fqcs1:fqcs1@106.4.212.228:65000"
 }
 
 headers = {
