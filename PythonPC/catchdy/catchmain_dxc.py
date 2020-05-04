@@ -14,7 +14,7 @@ class CrawlInfo1(Thread):
     def run(self):
         headers = {
             "User-Agent": UserAgent().chrome,
-            "Cookie": "_ga=GA1.2.1891294568.1587479976; __gads=ID=196a438dbf4084b2:T=1587480069:S=ALNI_MY-q1HznH1BF4_h56rL3jj0auybag; _gid=GA1.2.530615551.1588166539; remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d=eyJpdiI6ImpXK1poZnFFQ3FIejJLclJaUEFwd3c9PSIsInZhbHVlIjoiREFoNTJwK3NNb2Q3UFBNS1FEdUhGbytwb0s1T25SeG12b2xoUVwveEE0S3VwdWUxVkRtK0tjY2FnK3RNWEtScWFibXRLSXJMWFZZeGN6bjFqWmFET3FLTUpIRmgyd2E4TzZmSE0xZGI2RytwN1wvQVVFeFNLeWRwNHgxXC85dzU3YkVFNHZmN3c2OVVPWWJWRXpKMTEyUGl3PT0iLCJtYWMiOiI1ZGY0OWI4MGMwMjE1MDk4ZTlmNDQ4MzEyMDA2N2ZhOGZmOWU5M2QwZDUxNDNmZmViODUxNTc0NmE2ODMxYmI4In0%3D; Hm_cv_09720a8dd79381f0fd2793fad156ddfa=1*email*luantao985544%40163.com!*!*!1*role*free; XSRF-TOKEN=eyJpdiI6Iko0N2RjM2tFMmVrZElOTjhqT1BQMGc9PSIsInZhbHVlIjoiK0ZBRVFoNEtiaUdiNUs0ZkpqXC94cHY0anNPWEtzNFJsOXNcL2RDSzl2XC9DM3JEbk9zcHdQelYxQ2Z6XC9qdGllSVUiLCJtYWMiOiI1OTI5NTRlOTQ1YTkzMTY2Yjk5MGU3MGQ1ZjQ3ZWMxMmVhNTQ5Nzc3ZGZmOTQwNWRiZTlhOGQzZjIwYTAyMmJjIn0%3D; toobigdata_session=eyJpdiI6IkdSUEYxZTJVWU9Zb2lHbzdaUEE0NUE9PSIsInZhbHVlIjoiV3k0WnBOaXhWdXRzZmxoV0NGWmdwR3FxTVZ0bHBmNXdja3NuQVo5aDRIYk5ndlhNRFY1aU1LdzZ4bTBBdEFqNiIsIm1hYyI6ImExMDhkYWEzODFhZmFkMzE3OWE3NGU0YjVlNDVhZjNkMDMwODQzYmRlN2RkZjQ2MTBhY2NjZjQyZDA1MTVlYjQifQ%3D%3D; Hm_lvt_09720a8dd79381f0fd2793fad156ddfa=1588402669,1588422276,1588484369,1588519132; Hm_lpvt_09720a8dd79381f0fd2793fad156ddfa=1588519132; _gat_gtag_UA_8981755_3=1"
+            "Cookie": "_ga=GA1.2.1891294568.1587479976; __gads=ID=196a438dbf4084b2:T=1587480069:S=ALNI_MY-q1HznH1BF4_h56rL3jj0auybag; _gid=GA1.2.530615551.1588166539; remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d=eyJpdiI6ImpXK1poZnFFQ3FIejJLclJaUEFwd3c9PSIsInZhbHVlIjoiREFoNTJwK3NNb2Q3UFBNS1FEdUhGbytwb0s1T25SeG12b2xoUVwveEE0S3VwdWUxVkRtK0tjY2FnK3RNWEtScWFibXRLSXJMWFZZeGN6bjFqWmFET3FLTUpIRmgyd2E4TzZmSE0xZGI2RytwN1wvQVVFeFNLeWRwNHgxXC85dzU3YkVFNHZmN3c2OVVPWWJWRXpKMTEyUGl3PT0iLCJtYWMiOiI1ZGY0OWI4MGMwMjE1MDk4ZTlmNDQ4MzEyMDA2N2ZhOGZmOWU5M2QwZDUxNDNmZmViODUxNTc0NmE2ODMxYmI4In0%3D; Hm_cv_09720a8dd79381f0fd2793fad156ddfa=1*email*luantao985544%40163.com!*!*!1*role*free; XSRF-TOKEN=eyJpdiI6IktyVUdcL1NjaGc1Tk5wb1J1NUpmbmh3PT0iLCJ2YWx1ZSI6IlJaWjZXbnYzd1FDYUFpV3dXbnQxcnlWQVAzYTI3YUxWK0lpQzBsTlFMa0QyMXpDSG5xWG9VNERLN21GSXpTcnkiLCJtYWMiOiJiMTU4MWFhZmUzZDkwMjliZjE3MjdkNDYzNTczZDE1NDAwMzkwNDExNjEzMzg3MTY3OGI2NTJkMWJlNWVmZmY1In0%3D; toobigdata_session=eyJpdiI6InRraDMxcUF0eURVdTZSckltc3N0amc9PSIsInZhbHVlIjoiejN1RWZpa25TUEVKc0NUbURJcm1MeGs0eHNHY0d1Y2R2NkpzVUtheloxanFwNEFTMEdCN0dYXC8xNVdGNmJDczkiLCJtYWMiOiJhZWMxMjlhZWRkNWE3NTZkOWI3ZDllZWJlOTkzMmY0N2RhZDZjNGJmMTYwNTU1NTg3ZGQ2YTY4NWE2MTVhODk0In0%3D; Hm_lvt_09720a8dd79381f0fd2793fad156ddfa=1588519132,1588558835,1588575145,1588594078; Hm_lpvt_09720a8dd79381f0fd2793fad156ddfa=1588594078; _gat_gtag_UA_8981755_3=1"
 
         }
         proxies = {
@@ -79,9 +79,9 @@ class CrawlInfo2(Thread):
 if __name__ == '__main__':
     base_url = "https://toobigdata.com/douyin/promotions?page={}"
     base_shop_url = "https://ec.snssdk.com/product/fxgajaxstaticitem?id={}&b_type_new=0&device_id=0"
-    filename = "2020-5-03_420-600的内容.txt"
-    start_No = 600
-    for i in range(1, 9):
+    filename = "2020-5-04_600-1010的内容.txt"
+    start_No = 1010
+    for i in range(1, 10):
         print("开始咯!")
         url_queue = Queue()
         shop_url_queue = Queue()
@@ -108,6 +108,6 @@ if __name__ == '__main__':
         crawl2 = CrawlInfo2(shop_url_queue, filename, end_no, start_no)
         crawl2.start()
         crawl2.join()
-        start_No += 1
+        start_No += 5
         sleep(randint(1, 5))
 
