@@ -14,15 +14,14 @@ class CrawlInfo1(Thread):
     def run(self):
         headers = {
             "User-Agent": UserAgent().chrome,
-            "Cookie": "_ga=GA1.2.1891294568.1587479976; __gads=ID=196a438dbf4084b2:T=1587480069:S=ALNI_MY-q1HznH1BF4_h56rL3jj0auybag; _gid=GA1.2.530615551.1588166539; remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d=eyJpdiI6ImpXK1poZnFFQ3FIejJLclJaUEFwd3c9PSIsInZhbHVlIjoiREFoNTJwK3NNb2Q3UFBNS1FEdUhGbytwb0s1T25SeG12b2xoUVwveEE0S3VwdWUxVkRtK0tjY2FnK3RNWEtScWFibXRLSXJMWFZZeGN6bjFqWmFET3FLTUpIRmgyd2E4TzZmSE0xZGI2RytwN1wvQVVFeFNLeWRwNHgxXC85dzU3YkVFNHZmN3c2OVVPWWJWRXpKMTEyUGl3PT0iLCJtYWMiOiI1ZGY0OWI4MGMwMjE1MDk4ZTlmNDQ4MzEyMDA2N2ZhOGZmOWU5M2QwZDUxNDNmZmViODUxNTc0NmE2ODMxYmI4In0%3D; Hm_cv_09720a8dd79381f0fd2793fad156ddfa=1*email*luantao985544%40163.com!*!*!1*role*free; XSRF-TOKEN=eyJpdiI6IjJhVHhFNnBTOUZWOG5uK0pSYitabFE9PSIsInZhbHVlIjoidkIxUnZHV2x0Q0NmQzdVU29RTjNLWXQyTGlDTmtjZzQ5VkN0Z1hsU2xkT2hJcHRDcWVSb3FBRDVnOFhUYmVqQiIsIm1hYyI6IjBkYTg1OGFiMTA5YjlhOTdlNmMyMDc1YjllZTZjZjMyNGQyMjVlMGEzZDI5YmI2YjMzZTc4Mjk2NDc5ZWRjNDIifQ%3D%3D; toobigdata_session=eyJpdiI6IkQ3bGFyTnFCXC9sTmJVWmpUSkdFOEFRPT0iLCJ2YWx1ZSI6InpxNmxydHZuRG9kbWhveGxKeTh0aDFSeWVTZkgxXC9Wd0xaWW5cL0lhbWdqVnA4T3lUMWtGeGdESTM5VmcrT2NSbCIsIm1hYyI6ImY0MTczZjE0Njk2ZTBkNTUxNTgzMTUwYzAzMGFlNzZmOTBkZjE2NmFmMGU3MjI1YmU4MjFkZjdiZThmMzY5YjcifQ%3D%3D; Hm_lvt_09720a8dd79381f0fd2793fad156ddfa=1588558835,1588575145,1588594078,1588661206; Hm_lpvt_09720a8dd79381f0fd2793fad156ddfa=1588661206; _gat_gtag_UA_8981755_3=1"
-
+            "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6MTAwMDAsImV4cGlyZV90aW1lIjoxNTg5MjIzNjAwLCJpYXQiOjE1ODg2Njc1NzUsImlkIjoxMTM3MjZ9.4hew7o-Hf-q8xDLX2xSvRIcHbUcQhBXqJQQlQdCQXPk"
         }
         proxies = {
             "http": "http://0502fq1t1m:0502fq1t1m@59.55.158.225:65000",
             "https": "http://0502fq1t1m:0502fq1t1m@59.55.158.225:65000"
         }
 
-        with open("商品id.txt", "a", encoding="utf-8") as f:
+        with open("../day01/商品id2.txt", "a", encoding="utf-8") as f:
             num = 1
             while not self.url_queue.empty():
                 response = requests.get(self.url_queue.get(), proxies=proxies, headers=headers)
@@ -30,8 +29,7 @@ class CrawlInfo1(Thread):
                     response.encoding = "utf-8"
                     info = response.text
                     # print(info)
-                    infos = re.findall(r'<div class="col-md-2">\s+<a href="/douyin/promotion/g/(\d{19})" target="_blank"',
-                                       info)
+                    infos = re.findall(r'"promotion_id":"(\d{19})"', info)
                     for shop_id in infos:
                         f.write(shop_id + "\n")
                         shop_url_queue.put(base_shop_url.format(shop_id))
@@ -40,11 +38,10 @@ class CrawlInfo1(Thread):
 
 
 class CrawlInfo2(Thread):
-    def __init__(self, shop_url_queue, filename, end_no, start_no):
+    def __init__(self, shop_url_queue, filename,  start_no):
         Thread.__init__(self)
         self.shop_url_queue = shop_url_queue
         self.filename = filename
-        self.end_no = end_no
         self.start_no = start_no
 
     def run(self):
@@ -74,21 +71,18 @@ class CrawlInfo2(Thread):
                         f.write(shop_tel[0] + "\n")
                         print("已收集" + str(num) + "条数据")
                         num += 1
-            print(str(start_no)+"页到"+str(end_no)+"页的内容搜集完毕")
+            print(str(self.start_no)+"页的内容搜集完毕")
 
 if __name__ == '__main__':
-    base_url = "https://toobigdata.com/douyin/promotions?page={}"
+    base_url = "https://api-service.chanmama.com/v1/home/rank/yesterdayHotRank?category=&page={}&size=50&commission_rate=&date=2020-05-05"
     base_shop_url = "https://ec.snssdk.com/product/fxgajaxstaticitem?id={}&b_type_new=0&device_id=0"
-    filename = "2020-5-05_1010-1104的内容.txt"
-    start_No = 1105
-    for i in range(1, 10):
+    filename = "2020-4-30的内容.txt"
+    start_No = 59
+    while True:
         print("开始咯!")
         url_queue = Queue()
         shop_url_queue = Queue()
-        start_no = start_No
-        end_no = start_no + 5
-        for pn in range(start_no, end_no):
-            url_queue.put(base_url.format(pn))
+        url_queue.put(base_url.format(start_No))
 
         # crawl1_list = []
         # for i in range(0, 3):
@@ -105,9 +99,12 @@ if __name__ == '__main__':
         crawl1 = CrawlInfo1(url_queue)
         crawl1.start()
         crawl1.join()
-        crawl2 = CrawlInfo2(shop_url_queue, filename, end_no, start_no)
+        if shop_url_queue.empty():
+            print("第"+str(start_No)+"没有数据了")
+            break
+        crawl2 = CrawlInfo2(shop_url_queue, filename, start_No)
         crawl2.start()
         crawl2.join()
-        start_No += 5
+        start_No += 1
         sleep(randint(1, 5))
 
