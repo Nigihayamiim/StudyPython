@@ -14,7 +14,7 @@ class CrawlInfo1(Thread):
     def run(self):
         headers = {
             "User-Agent": UserAgent().chrome,
-            "Cookie": "_ga=GA1.2.1891294568.1587479976; __gads=ID=196a438dbf4084b2:T=1587480069:S=ALNI_MY-q1HznH1BF4_h56rL3jj0auybag; _gid=GA1.2.530615551.1588166539; remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d=eyJpdiI6ImpXK1poZnFFQ3FIejJLclJaUEFwd3c9PSIsInZhbHVlIjoiREFoNTJwK3NNb2Q3UFBNS1FEdUhGbytwb0s1T25SeG12b2xoUVwveEE0S3VwdWUxVkRtK0tjY2FnK3RNWEtScWFibXRLSXJMWFZZeGN6bjFqWmFET3FLTUpIRmgyd2E4TzZmSE0xZGI2RytwN1wvQVVFeFNLeWRwNHgxXC85dzU3YkVFNHZmN3c2OVVPWWJWRXpKMTEyUGl3PT0iLCJtYWMiOiI1ZGY0OWI4MGMwMjE1MDk4ZTlmNDQ4MzEyMDA2N2ZhOGZmOWU5M2QwZDUxNDNmZmViODUxNTc0NmE2ODMxYmI4In0%3D; Hm_cv_09720a8dd79381f0fd2793fad156ddfa=1*email*luantao985544%40163.com!*!*!1*role*free; XSRF-TOKEN=eyJpdiI6IjJhVHhFNnBTOUZWOG5uK0pSYitabFE9PSIsInZhbHVlIjoidkIxUnZHV2x0Q0NmQzdVU29RTjNLWXQyTGlDTmtjZzQ5VkN0Z1hsU2xkT2hJcHRDcWVSb3FBRDVnOFhUYmVqQiIsIm1hYyI6IjBkYTg1OGFiMTA5YjlhOTdlNmMyMDc1YjllZTZjZjMyNGQyMjVlMGEzZDI5YmI2YjMzZTc4Mjk2NDc5ZWRjNDIifQ%3D%3D; toobigdata_session=eyJpdiI6IkQ3bGFyTnFCXC9sTmJVWmpUSkdFOEFRPT0iLCJ2YWx1ZSI6InpxNmxydHZuRG9kbWhveGxKeTh0aDFSeWVTZkgxXC9Wd0xaWW5cL0lhbWdqVnA4T3lUMWtGeGdESTM5VmcrT2NSbCIsIm1hYyI6ImY0MTczZjE0Njk2ZTBkNTUxNTgzMTUwYzAzMGFlNzZmOTBkZjE2NmFmMGU3MjI1YmU4MjFkZjdiZThmMzY5YjcifQ%3D%3D; Hm_lvt_09720a8dd79381f0fd2793fad156ddfa=1588558835,1588575145,1588594078,1588661206; Hm_lpvt_09720a8dd79381f0fd2793fad156ddfa=1588661206; _gat_gtag_UA_8981755_3=1"
+            "Cookie": "_ga=GA1.2.1891294568.1587479976; __gads=ID=196a438dbf4084b2:T=1587480069:S=ALNI_MY-q1HznH1BF4_h56rL3jj0auybag; remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d=eyJpdiI6ImpXK1poZnFFQ3FIejJLclJaUEFwd3c9PSIsInZhbHVlIjoiREFoNTJwK3NNb2Q3UFBNS1FEdUhGbytwb0s1T25SeG12b2xoUVwveEE0S3VwdWUxVkRtK0tjY2FnK3RNWEtScWFibXRLSXJMWFZZeGN6bjFqWmFET3FLTUpIRmgyd2E4TzZmSE0xZGI2RytwN1wvQVVFeFNLeWRwNHgxXC85dzU3YkVFNHZmN3c2OVVPWWJWRXpKMTEyUGl3PT0iLCJtYWMiOiI1ZGY0OWI4MGMwMjE1MDk4ZTlmNDQ4MzEyMDA2N2ZhOGZmOWU5M2QwZDUxNDNmZmViODUxNTc0NmE2ODMxYmI4In0%3D; XSRF-TOKEN=eyJpdiI6ImNPQ2pNYTdWT3ArQlwvUDVPdnNJQkZ3PT0iLCJ2YWx1ZSI6InBTelZybTVna1RJU1lcL1hkd0ZsRUtqelo3M2hyV3FzR1pZdmdyK21sNkUyU0dGcmtiK2FDRFlxMFE3eTZqaElNIiwibWFjIjoiMGU4ZDZhMTMyOTcyZTFlNTA3OTQ2MGM3ZjllZmJkM2E2YzkxODRmNDRjNWExOGIxOWUzZGZhNjE5OWQ3ZWQzNiJ9; toobigdata_session=eyJpdiI6IlFBWldzSW1oQnNCQ0NLd3dJZ0JsMEE9PSIsInZhbHVlIjoiMXkyZTFCN2NcL0lPdWtwWmtZcVpicVwvVXN1clFwc0JvMzQ1Rk1kTDVKZ3dtdFVJMWtLbVJQcUlvUVh5blRkQmt0IiwibWFjIjoiZjVlMTBhMGM5ZDlmNmYxODIxNTMyOWFiNDI3ZTExNjNlMWQyZDE5NjgzMmUxODNmMTQyZjYyYmQwNGI0ZjhiYSJ9; Hm_lvt_09720a8dd79381f0fd2793fad156ddfa=1588575145,1588594078,1588661206,1588762378; Hm_lpvt_09720a8dd79381f0fd2793fad156ddfa=1588762378; Hm_cv_09720a8dd79381f0fd2793fad156ddfa=1*email*luantao985544%40163.com!*!*!1*role*free; _gid=GA1.2.2049799570.1588762378; _gat_gtag_UA_8981755_3=1"
 
         }
         proxies = {
@@ -22,7 +22,7 @@ class CrawlInfo1(Thread):
             "https": "http://0502fq1t1m:0502fq1t1m@59.55.158.225:65000"
         }
 
-        with open("商品id.txt", "a", encoding="utf-8") as f:
+        with open("5-07商品id.txt", "a", encoding="utf-8") as f:
             num = 1
             while not self.url_queue.empty():
                 response = requests.get(self.url_queue.get(), proxies=proxies, headers=headers)
@@ -63,6 +63,7 @@ class CrawlInfo2(Thread):
                 response = requests.get(shop_url, headers=headers, proxies=proxies)
                 code = response.status_code
                 print("这是第"+str(count)+"条数据,地址为:"+shop_url)
+                sleep(randint(0, 1))
                 count += 1
                 if code == 200:
                     response.encoding = "utf-8"
@@ -79,9 +80,9 @@ class CrawlInfo2(Thread):
 if __name__ == '__main__':
     base_url = "https://toobigdata.com/douyin/promotions?page={}"
     base_shop_url = "https://ec.snssdk.com/product/fxgajaxstaticitem?id={}&b_type_new=0&device_id=0"
-    filename = "2020-5-05_1010-1104的内容.txt"
-    start_No = 1105
-    for i in range(1, 10):
+    filename = "2020-5-07_1737-2000的内容.txt"
+    start_No = 1737
+    for i in range(1, 9):
         print("开始咯!")
         url_queue = Queue()
         shop_url_queue = Queue()
