@@ -1,16 +1,11 @@
-import re
+import pymysql
 
-import requests
-from fake_useragent import UserAgent
-
-url = "https://ec.snssdk.com/product/fxgajaxstaticitem?id=3334052341354747123&b_type_new=0&device_id=0"
-headers = {
-    "User-Agent": UserAgent().chrome
-}
-proxies = {
-    "http": "111.222.141.127:8118"
-}
-
-response = requests.get(url, headers=headers, proxies=proxies)
-info = response.text
-re.findall(r'"shop_tel":"(1\d+)', info)
+client = pymysql.connect(host='106.53.192.189', port=3306, user='root', password='x1113822624', db='shop',charset='utf8')
+cursor = client.cursor()
+sql_shop = 'insert ignore into shop(shop_id,shop_name,shop_tel,shop_position) values ("abCsjUW","茜茜服饰商行","15779119280","广东省")'
+result = cursor.execute(sql_shop)
+if result:
+    print("添加成功")
+else:
+    print("添加失败")
+print(result)

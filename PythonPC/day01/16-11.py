@@ -1,7 +1,6 @@
-import telnetlib
-
 import requests
 from fake_useragent import UserAgent
+from urllib3.exceptions import NewConnectionError
 
 url = "https://httpbin.org/ip"
 
@@ -14,6 +13,11 @@ headers = {
     "User-Agent": UserAgent().chrome
 }
 
-response = requests.get(url, proxies=proxies, headers=headers)
-print(response.text)
+try:
+    response = requests.get(url, proxies=proxies, headers=headers)
+    print(response.text)
+except Exception as e:
+    print("连接超时,尝试再次连接")
+    response = requests.get(url, proxies=proxies, headers=headers)
+print("继续运行")
 

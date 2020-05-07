@@ -26,6 +26,7 @@ request_payload = {
     "sort": "day_pv_count", "order_by": "desc"
 }
 
+
 response = requests.post(url, headers=headers, proxies=proxies, data=request_payload)
 info = response.json()
 promotion_id = jsonpath(info, '')

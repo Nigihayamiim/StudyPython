@@ -80,7 +80,7 @@ class CrawlInfo2(Thread):
 if __name__ == '__main__':
     base_url = "https://toobigdata.com/douyin/promotions?page={}"
     base_shop_url = "https://ec.snssdk.com/product/fxgajaxstaticitem?id={}&b_type_new=0&device_id=0"
-    filename = "2020-5-07_1737-2000的内容.txt"
+    filename = "2020-5-07的内容.txt"
     start_No = 1737
     for i in range(1, 9):
         print("开始咯!")
