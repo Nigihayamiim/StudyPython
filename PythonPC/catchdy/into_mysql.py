@@ -96,7 +96,7 @@ class CrawlInfo2(Thread):
 if __name__ == '__main__':
     base_url = "https://toobigdata.com/douyin/promotions?page={}"
     base_shop_url = "https://ec.snssdk.com/product/fxgajaxstaticitem?id={}&b_type_new=0&device_id=0"
-    client = pymysql.connect(host='106.53.192.189', port=3306, user='root', password='x1113822624', charset='utf8',
+    client = pymysql.connect(host='49.233.3.208', port=3306, user='root', password='x1113822624', charset='utf8',
                              db='shop')
     cursor = client.cursor()
     sql_goods = 'insert ignore into goods values (%s, %s, %s)'
@@ -105,7 +105,7 @@ if __name__ == '__main__':
 
     warnings.filterwarnings("ignore")
 
-    start_No = 1461
+    start_No = 1779
     for i in range(1, 11):
         print("开始咯!")
         url_queue = Queue()
