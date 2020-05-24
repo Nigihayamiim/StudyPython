@@ -40,7 +40,10 @@ class CrawlInfo1(Thread):
                     r'<div class="col-md-2">\s+<a href="/douyin/promotion/g/(\d{19})" target="_blank"',
                     info)
                 for shop_id in infos:
-                    result = cursor.execute(sql_goods_id, [shop_id])
+                    try:
+                        result = cursor.execute(sql_goods_id, [shop_id])
+                    except Exception as e:
+                        client.rollback()
                     if result:
                         shop_url_queue.put(base_shop_url.format(shop_id))
                 print("第" + str(num) + "页")
@@ -84,11 +87,11 @@ class CrawlInfo2(Thread):
                 shop_tel = ''.join(re.findall(r'"shop_tel":"(.*?)"', shop))
                 product_id = ''.join(re.findall(r'"product_id":"(.*?)"', shop))
                 good_name = ''.join(re.findall(r'"name":"(.*?)"', shop))
-                result = cursor.execute(sql_goods, [product_id, good_name, shop_id])
+                ## result = cursor.execute(sql_goods, [product_id, good_name, shop_id])
+                result = cursor.execute(sql_shop, [shop_id, shop_name, shop_tel, shop_position, product_id])
+                client.commit()
                 if result:
                     print("成功添加了"+str(num)+"条数据")
-                    cursor.execute(sql_shop, [shop_id, shop_name, shop_tel, shop_position])
-                    client.commit()
                     num += 1
         print(str(start_no) + "页到" + str(end_no) + "页的内容搜集完毕")
 
@@ -97,15 +100,15 @@ if __name__ == '__main__':
     base_url = "https://toobigdata.com/douyin/promotions?page={}"
     base_shop_url = "https://ec.snssdk.com/product/fxgajaxstaticitem?id={}&b_type_new=0&device_id=0"
     client = pymysql.connect(host='49.233.3.208', port=3306, user='root', password='x1113822624', charset='utf8',
-                             db='shop')
+                             db='forTel')
     cursor = client.cursor()
     sql_goods = 'insert ignore into goods values (%s, %s, %s)'
-    sql_shop = 'insert ignore into shop(shop_id,shop_name,shop_tel,shop_position) values (%s,%s,%s,%s)'
+    sql_shop = 'insert ignore into shop(shop_id,shop_name,shop_tel,shop_position,good_id) values (%s,%s,%s,%s,%s)'
     sql_goods_id = 'insert ignore into goods_id values (%s)'
 
     warnings.filterwarnings("ignore")
 
-    start_No = 1779
+    start_No = 2240
     for i in range(1, 11):
         print("开始咯!")
         url_queue = Queue()
