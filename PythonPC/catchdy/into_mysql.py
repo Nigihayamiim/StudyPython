@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
     warnings.filterwarnings("ignore")
 
-    start_No = 1297
+    start_No = 1473
     for i in range(1, 11):
         print("开始咯!")
         url_queue = Queue()
