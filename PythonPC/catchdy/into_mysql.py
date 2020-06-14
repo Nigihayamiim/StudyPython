@@ -17,7 +17,7 @@ class CrawlInfo1(Thread):
 
     def run(self):
         headers = {
-            "User-Agent": "User-Agent:Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.94 Safari/537.36",
+            "User-Agent": UserAgent().chrome,
             "Cookie": "_ga=GA1.2.157089973.1589035569; remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d=eyJpdiI6Ik96REdIclMzb3BWXC8xNDBMRjNSSzRBPT0iLCJ2YWx1ZSI6IlRrc01cL1VtNUxMRktEUmU5MkxzM0VYbm9PV1pGWGVnNUpJOG1xS0taeFBCN0g2Zlp2Z2J5eFpMNk5KMmZmbkp0SE8yZUNJeXFBSEhsekpUd1p3cHZ5MjdZc0xQakFMTitEcU5sYk95bVkrcHVOSFVYaVBRSXgxM1pwZWlvcFkyRk9jUFg4c3Q1Rit4M3VKeEVZSXBwM1E9PSIsIm1hYyI6IjM1MzM0ZmIzMWVkOTAwMmNhZWIxNjk3MDg3OGQwYTMwYTFlNTk3MGYyOTg1MzVkZmZmZmM3Mjg0MmYyNzdiYTAifQ%3D%3D; __gads=ID=03d2175f76b8ad70:T=1589035656:S=ALNI_MYaduCxeGubch0zBJrX4ZV9ULPFxg; Hm_lvt_09720a8dd79381f0fd2793fad156ddfa=1590381533,1590477750,1590551460,1590816005; _gid=GA1.2.1541124885.1590816005; XSRF-TOKEN=eyJpdiI6IjFKRWtcL2V0Q3lHVHJ1blREa3ZmRDR3PT0iLCJ2YWx1ZSI6IkdkMFdyUmJrNWwwVERrRXdkTnhBUW5Ma1gzRVwveVRIVmJyeURBb2FiSnN4eFFpK1F3MzJCTTdWSWo2Yk5qVmR4IiwibWFjIjoiN2Y5ZTczNTg1MjdhZjZjNmFmNDQzNmQyZDhiZDI2ZTJkZDYzNWI0MzI4ZmVlZjNkMGRlMDlhMjgwZDI2ZGJiMyJ9; toobigdata_session=eyJpdiI6IkJYa1wvdzg5bWJnSTl4dUpXd3lWS3ZBPT0iLCJ2YWx1ZSI6IlVidUMwbXJaMzFxMVMrWUVEc0FEa3E3ZDk5NWJpSFBxZWV2QlwvRjBHOEIyUWlVdVZGVmdNMm11d1JFSnpaT0xvIiwibWFjIjoiZTU3YWFhNzRmMDU2ZDJlNmQzYTYxMjk0MWEwZTk2ZWNkYzE3MDRlYThkNjQyMmRmNDViZTZiZjExMzE3ODU2MiJ9; Hm_lpvt_09720a8dd79381f0fd2793fad156ddfa=1590816095; Hm_cv_09720a8dd79381f0fd2793fad156ddfa=1*email*odgLGvxs0_rWSDfFPs8fBjO2SxIQ%40wechat.com!*!*!1*role*free"
         }
         proxies = {
@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
     warnings.filterwarnings("ignore")
 
-    start_No = 1885
+    start_No = 1069
     for i in range(1, 11):
         print("开始咯!")
         url_queue = Queue()
