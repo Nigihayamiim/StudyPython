@@ -15,7 +15,7 @@ def set_style(name, height, bold = False):
     return style
 
 def write_excel(datas,filename,date):
-    #创建工作簿
+    # 创建工作簿
     workbook = xlwt.Workbook(encoding='utf-8')
 
     # 创建sheet
@@ -43,24 +43,27 @@ def write_excel(datas,filename,date):
     date_format.font = font
     date_format.alignment = al
 
-    data_sheet.col(0).width = 6000
-    data_sheet.col(4).width = 6000
-    data_sheet.col(5).width = 5000
-    data_sheet.col(6).width = 5000
+    data_sheet.col(0).width = 3000
+    data_sheet.col(1).width = 8000
+    data_sheet.col(2).width = 3800
+    data_sheet.col(3).width = 3000
+    data_sheet.col(4).width = 3500
+    data_sheet.col(5).width = 6000
 
     # ----------------------------------------------------
 
-    row0 = [u'单号', u'下单重量', '实际重量', '超重重量', '状态', '下单时间', '检查时间']
+    row0 = ['商店编号', '商店名称', '联系方式', '商店地区', '收录日期', '商品编号']
     for i in range(len(row0)):
         data_sheet.write(0, i, row0[i], style)
-    nrows=len(datas)
+    nrows = len(datas)
 
     for i in range(nrows):
         for j in range(len(row0)):
-            if (j == 5) | (j == 6):
+            if j == 4:
                 data_sheet.write(i + 1, j, datas[i][j], date_format)
             else:
                 data_sheet.write(i+1, j, datas[i][j], style)
+
 
     # 工作簿保存到磁盘
     workbook.save("C:\\Users\\WaitingForTheName\\Desktop\\" + filename)

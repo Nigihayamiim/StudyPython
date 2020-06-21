@@ -1,6 +1,7 @@
 i = 5
 j = 4
 
+k = []
 c = j - i
 
-print(c > 0)
+print(len(k))

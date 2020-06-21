@@ -21,7 +21,7 @@ class CrawlInfo1(Thread):
     def run(self):
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36 Edg/83.0.478.45",
-            "Cookie": "__stu=GGCHRWa5AHEg9ihX; 3AB9D23F7A4B3C9B=NTCZJ5MF6UE4MSMOZOLRHUKK57ORYC4THE6XYJGB7IQKEM57AQ5RBC7A25UEVW26Y4WLE3P3LXC5RMDDPTPKUFXA5Y; __jdv=59982123|baidu-search|t_262767352_baidusearch|cpc|159753633108_0_c630d82876644627bcf96a743a64378c|1591952888278; thor=C9C2876A4E30A11E064E419A89F53AB28B7806901D27425274D2264F8558349063B42A42B899747D88BCE217BE4216A32C14C6A8090DF3A96E38E0B1C9CFF7B362E8B3D2173215D7249AAEFA087B969E9C97748B3193069E9838097D893B938634F4CD6AEB2C15B0C181567987C1C701C7DED99D89E1618D75FEB7084EE5D13E6F523D23E9E4B0486BC962090ACE592E9F53F92D62BD46C0C939F509E582625B; pin=jd_ZpYJXyLqEWnv; unick=jd_ZpYJXyLqEWnv; __sts=GGCHRWa5AHEg9ihX|Wa5LFSHC9Gj; __jda=197855408.1591780348369911455505.1591780348.1592631533.1592724421.13; __jdc=197855408; JSESSIONID=DE912009F26A50A823F191038D2B4E23.s1"
+            "Cookie": "__jdv=59982123|baidu-search|t_262767352_baidusearch|cpc|159753633089_0_571be123ec7f401fb0b2d0712790fc4c|1591597483412; __stu=EDGESWa58EOuBAy3; 3AB9D23F7A4B3C9B=LWF5KQ5X4FZZDHIUUU45XC7F3O4I3HJKJ6QXJABGQBIZQWCIEWDOOXS3VDEJG5DBPV4YFQ4DKI32NYSNCWYZ3SSYTY; thor=563DB6CC9AFCC13121C96E6ED473E3A022F1982AA0F5A26F8DB58F13D45978CD8572A2E2BC273D6DF48D00DEBE0E4E9AABBA60E88BDCBDC3F9F291EC7BC6A7E8B63496CB860DA89B848FE928E230C356833509C1924788714D943ED939657E429FF86C86AEA67BA283C587A4114629B98A97C81E08A91D9246DE82570733212276D0C581F0A50BD1FF471371248AC63BE2C502875950AB973FF544D7E6B72919; pin=jd_725cc0ab0071d; unick=jd_139233bwzjg; __sts=EDGESWa58EOuBAy3|Wa5LCck8pbS; __jda=197855408.15915962939721888410676.1591596294.1592663260.1592714288.28; __jdc=197855408; JSESSIONID=995F82EBCAA240FA21B3CE0CD0231FFC.s1"
         }
         proxies = {
             "http": "http://0502fq1t1m:0502fq1t1m@59.55.158.225:65000",
@@ -82,9 +82,9 @@ class CrawlInfo1(Thread):
                         cursor.execute(sql_setcheckweight, [tknum, order_weight, real_weight, chazhi, s, order_time])
                         cursor.execute(sql_updatecheck, [tknum])
                         client.commit()
-                        print("已经检查到第" + str(num) + "条为超重，单号为：" + tknum[0])
+                        print("已经检查到第"+str(num)+"条为超重，单号为：" + tknum[0])
                         num += 1
-                    elif chazhi < -1:
+                    elif chazhi < -1 :
                         cursor.execute(sql_setcheckweight, [tknum, order_weight, real_weight, chazhi, s, order_time])
                         cursor.execute(sql_updatecheck, [tknum])
                         client.commit()
@@ -120,12 +120,12 @@ if __name__ == '__main__':
                              db='JDWL')
     cursor = client.cursor()
 
-    sql_setcheckweight = 'insert ignore into CheckWeight_huabei(tknum,order_weight,real_weight,over_weight,status,order_time) values (%s, %s, %s, %s, %s, %s)'
-    sql_selectnumbers = 'select tknum from OrderWeight_huabei where ischeck = "0"'
-    sql_selectweight = 'select weight from OrderWeight_huabei where tknum = %s'
-    sql_updatecheck = 'update OrderWeight_huabei set ischeck = "1" where tknum = %s'
-    sql_updateNonum = 'update OrderWeight_huabei set ischeck = "无单号" where tknum = %s'
-    sql_selectordertime = 'select order_time from OrderWeight_huabei where tknum = %s'
+    sql_setcheckweight = 'insert ignore into CheckWeight_new(tknum,order_weight,real_weight,over_weight,status,order_time) values (%s, %s, %s, %s, %s, %s)'
+    sql_selectnumbers = 'select tknum from OrderWeight_new where ischeck = "0"'
+    sql_selectweight = 'select weight from OrderWeight_new where tknum = %s'
+    sql_updatecheck = 'update OrderWeight_new set ischeck = "1" where tknum = %s'
+    sql_updateNonum = 'update OrderWeight_new set ischeck = "无单号" where tknum = %s'
+    sql_selectordertime = 'select order_time from OrderWeight_new where tknum = %s'
 
     cursor.execute(sql_selectnumbers)
     select_numbers = cursor.fetchall()
