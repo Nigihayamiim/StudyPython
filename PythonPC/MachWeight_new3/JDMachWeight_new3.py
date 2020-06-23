@@ -21,7 +21,7 @@ class CrawlInfo1(Thread):
     def run(self):
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36 Edg/83.0.478.45",
-            "Cookie": "__stu=GGCHRWa5AHEg9ihX; 3AB9D23F7A4B3C9B=NTCZJ5MF6UE4MSMOZOLRHUKK57ORYC4THE6XYJGB7IQKEM57AQ5RBC7A25UEVW26Y4WLE3P3LXC5RMDDPTPKUFXA5Y; __jdv=59982123|baidu-search|t_262767352_baidusearch|cpc|159753633108_0_c630d82876644627bcf96a743a64378c|1591952888278; __sts=GGCHRWa5AHEg9ihX|Wa5NKh702WK; thor=CAF3461E0C9A9D9EA0411C773DE1178F782FA4FF9E2EF45C25309747788E80F556B783DCDA1533524EE2C48FE8383FBF16757E88253DEE9FFD446391A400D7DCF67882AE411D1F020572B13A75060993F6049475CAD48B40D02A31B48B4D9C80E930DDFA291CC025D677E4E89A109406C9FE47F85FA7BCA8E6E65E90FD8351BEB022483F459C104DD31CF3ED1B09303ABE612FABF3A026335CC7C1B23037304D; pin=jd_rIarCpnAkgcY; unick=jd_rIarCpnAkgcY; __jda=197855408.1591780348369911455505.1591780348.1592742612.1592916094.15; __jdc=197855408; __jdb=197855408.10.1591780348369911455505|15.1592916094; JSESSIONID=23AB64A48F24FD217E00C6E48A0BB113.s1"
+            "Cookie": "__stu=GGCHRWa5AHEg9ihX; 3AB9D23F7A4B3C9B=NTCZJ5MF6UE4MSMOZOLRHUKK57ORYC4THE6XYJGB7IQKEM57AQ5RBC7A25UEVW26Y4WLE3P3LXC5RMDDPTPKUFXA5Y; __jdv=59982123|baidu-search|t_262767352_baidusearch|cpc|159753633108_0_c630d82876644627bcf96a743a64378c|1591952888278; thor=12467F15FC83A299A0BBE831A76BB0D851AFDDFAD3447C608CE75A416493F630E9D749152C73BBE29EA9B04A64891B54105115D0440EAFA237BD7A2854A0465A0BCBDD53B14458A0CA34621C1D7B8CC0DC90372C8F011A26273D30CDF63F8B1A25F2F1AA6583588E8FD43673DCEEC4296CFE791E7F2F3ACDD51F2EAE6BC3220A377E73671C2BEF811B6C571A2EF92382F941247CF5B2BDA2B421D38FCF1755C9; pin=jd_ceRrROOyRMml; unick=jd_ceRrROOyRMml; __sts=GGCHRWa5AHEg9ihX|Wa5NKh702WK; __jda=197855408.1591780348369911455505.1591780348.1592742612.1592916094.15; __jdc=197855408; __jdb=197855408.4.1591780348369911455505|15.1592916094; JSESSIONID=E2289480A94FABC2F0588EE4C24D704E.s1"
         }
         proxies = {
             "http": "http://0502fq1t1m:0502fq1t1m@59.55.158.225:65000",
@@ -120,12 +120,12 @@ if __name__ == '__main__':
                              db='JDWL')
     cursor = client.cursor()
 
-    sql_setcheckweight = 'insert ignore into CheckWeight_new2(tknum,order_weight,real_weight,over_weight,status,order_time) values (%s, %s, %s, %s, %s, %s)'
-    sql_selectnumbers = 'select tknum from OrderWeight_new2 where ischeck = "0"'
-    sql_selectweight = 'select weight from OrderWeight_new2 where tknum = %s'
-    sql_updatecheck = 'update OrderWeight_new2 set ischeck = "1" where tknum = %s'
-    sql_updateNonum = 'update OrderWeight_new2 set ischeck = "无单号" where tknum = %s'
-    sql_selectordertime = 'select order_time from OrderWeight_new2 where tknum = %s'
+    sql_setcheckweight = 'insert ignore into CheckWeight_new3(tknum,order_weight,real_weight,over_weight,status,order_time) values (%s, %s, %s, %s, %s, %s)'
+    sql_selectnumbers = 'select tknum from OrderWeight_new3 where ischeck = "0"'
+    sql_selectweight = 'select weight from OrderWeight_new3 where tknum = %s'
+    sql_updatecheck = 'update OrderWeight_new3 set ischeck = "1" where tknum = %s'
+    sql_updateNonum = 'update OrderWeight_new3 set ischeck = "无单号" where tknum = %s'
+    sql_selectordertime = 'select order_time from OrderWeight_new3 where tknum = %s'
 
     cursor.execute(sql_selectnumbers)
     select_numbers = cursor.fetchall()

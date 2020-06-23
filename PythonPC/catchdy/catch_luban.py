@@ -58,7 +58,8 @@ sleep(randint(5, 6))
 driver.find_element_by_xpath('//input[@placeholder="开始日期"]').click()
 sleep(randint(1, 2))
 
-driver.find_element_by_xpath('/html/body/div[3]/div[1]/div[1]/button[1]').click()
+# driver.find_element_by_xpath('/html/body/div[3]/div[1]/div[1]/button[1]').click()
+driver.find_element_by_xpath('/html/body/div[3]/div[1]/div[1]/button[2]').click()
 sleep(randint(6, 10))
 
 page = 1
