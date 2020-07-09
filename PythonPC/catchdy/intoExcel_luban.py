@@ -2,7 +2,7 @@ import pymysql as pymysql
 
 from PythonPC.catchdy.forEccel_luban import write_excel
 
-date = "2020-06-19%"
+date = "2020-06-26%"
 filename = date + "抖音鲁班商家信息.xls"
 
 

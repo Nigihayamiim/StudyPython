@@ -21,7 +21,7 @@ class CrawlInfo1(Thread):
     def run(self):
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36 Edg/83.0.478.45",
-            "Cookie": "__stu=GGCHRWa5AHEg9ihX; 3AB9D23F7A4B3C9B=NTCZJ5MF6UE4MSMOZOLRHUKK57ORYC4THE6XYJGB7IQKEM57AQ5RBC7A25UEVW26Y4WLE3P3LXC5RMDDPTPKUFXA5Y; __jdv=59982123|baidu-search|t_262767352_baidusearch|cpc|159753633108_0_c630d82876644627bcf96a743a64378c|1591952888278; __sts=GGCHRWa5AHEg9ihX|Wa5NKh702WK; thor=CAF3461E0C9A9D9EA0411C773DE1178F782FA4FF9E2EF45C25309747788E80F556B783DCDA1533524EE2C48FE8383FBF16757E88253DEE9FFD446391A400D7DCF67882AE411D1F020572B13A75060993F6049475CAD48B40D02A31B48B4D9C80E930DDFA291CC025D677E4E89A109406C9FE47F85FA7BCA8E6E65E90FD8351BEB022483F459C104DD31CF3ED1B09303ABE612FABF3A026335CC7C1B23037304D; pin=jd_rIarCpnAkgcY; unick=jd_rIarCpnAkgcY; __jda=197855408.1591780348369911455505.1591780348.1592742612.1592916094.15; __jdc=197855408; __jdb=197855408.10.1591780348369911455505|15.1592916094; JSESSIONID=23AB64A48F24FD217E00C6E48A0BB113.s1"
+            "Cookie": "__stu=EDGESWa58EOuBAy3; 3AB9D23F7A4B3C9B=LWF5KQ5X4FZZDHIUUU45XC7F3O4I3HJKJ6QXJABGQBIZQWCIEWDOOXS3VDEJG5DBPV4YFQ4DKI32NYSNCWYZ3SSYTY; __jdv=59982123|direct|-|none|-|1593002069616; __sts=EDGESWa58EOuBAy3|Wa68L0l9IyZ; __jda=197855408.15915962939721888410676.1591596294.1594130273.1594213239.50; __jdc=197855408; thor=CAF3461E0C9A9D9EA0411C773DE1178F782FA4FF9E2EF45C25309747788E80F50B3C547B2016AD46E82E90217B0BE4B5CDD1A710F5C6C0A9D9CF642CD187E877164B56A864255626E45B2D2841EC6A6E0600AC1D9C4E47B2C8CA0975E91329D82BBEAAED2D91D1E569840B346FDF79CDE4B9822C1F0DAC87181ED754209E2350CC6A152EE9A36DCBAE21A32AF2CCCD105C192B0B4B73378BD833F3A9041485BF; pin=jd_rIarCpnAkgcY; unick=jd_rIarCpnAkgcY; __jdb=197855408.5.15915962939721888410676|50.1594213239; JSESSIONID=E678951E72D2402A8058EADE92F63C07.s1"
         }
         proxies = {
             "http": "http://0502fq1t1m:0502fq1t1m@59.55.158.225:65000",
@@ -63,7 +63,6 @@ class CrawlInfo1(Thread):
 
                     cursor.execute(sql_selectweight, [tknum])
                     order_weights = cursor.fetchall()
-                    client.commit()
                     real_weights = re.findall(r'</b>重量：(.*?) kg</p>', info)
 
                     for order_weight in order_weights:
@@ -76,34 +75,31 @@ class CrawlInfo1(Thread):
 
                     cursor.execute(sql_selectordertime, [tknum])
                     order_time = cursor.fetchall()
-                    client.commit()
 
                     if chazhi > 0:
                         cursor.execute(sql_setcheckweight, [tknum, order_weight, real_weight, chazhi, s, order_time])
                         cursor.execute(sql_updatecheck, [tknum])
-                        client.commit()
                         print("已经检查到第"+str(num)+"条为超重，单号为：" + tknum[0])
                         num += 1
                     elif chazhi < -1 :
                         cursor.execute(sql_setcheckweight, [tknum, order_weight, real_weight, chazhi, s, order_time])
                         cursor.execute(sql_updatecheck, [tknum])
-                        client.commit()
                         print("已经检查到第" + str(num) + "条为少重，单号为：" + tknum[0])
                         num += 1
 
                     else:
                         cursor.execute(sql_updatecheck, [tknum])
-                        client.commit()
                         print("已经检查到第" + str(num) + "条为正常，单号为：" + tknum[0])
                         num += 1
                 elif len(s) == 0:
                     cursor.execute(sql_updatecheck, [tknum])
-                    client.commit()
                     print(str(num) + "条单号被删除了，单号为：" + tknum[0])
                     num += 1
                 else:
                     print(str(num) + "条还没出单呢！，单号为：" + tknum[0])
                     num += 1
+
+        client.commit()
 
 if __name__ == '__main__':
 

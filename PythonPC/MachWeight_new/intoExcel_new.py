@@ -2,7 +2,7 @@ import pymysql as pymysql
 
 from PythonPC.IntoExcel.forExcel import write_excel
 
-date = "2020-06-23%"
+date = "2020-06-24%"
 filename = date + "新全国超重少重统计.xls"
 
 
