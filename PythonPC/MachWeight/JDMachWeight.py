@@ -59,7 +59,7 @@ class CrawlInfo1(Thread):
                     s = str(sta)
                     b = len(s)
 
-                if (s != "下单") & (s != "揽件再取") & (b != 0):
+                if (s != "下单") & (s != "揽件再取") & (s != "客户取消") & (s != "终止揽收") & (b != 0):
 
                     cursor.execute(sql_selectweight, [tknum])
                     order_weights = cursor.fetchall()
@@ -67,7 +67,7 @@ class CrawlInfo1(Thread):
 
                     for order_weight in order_weights:
                         for o in order_weight:
-                            ow = float(o)
+                            ow = o
                     for real_weight in real_weights:
                         rw = float(real_weight)
 
@@ -77,23 +77,31 @@ class CrawlInfo1(Thread):
                     order_time = cursor.fetchall()
 
                     if chazhi > 0:
-                        cursor.execute(sql_setcheckweight, [tknum, order_weight, real_weight, chazhi, s, order_time])
-                        cursor.execute(sql_updatecheck, [tknum])
-                        print("已经检查到第"+str(num)+"条为超重，单号为：" + tknum[0])
+                        cursor.execute(sql_setcheckweight, [tknum, ow, rw, chazhi, s, order_time])
+                        cursor.execute(sql_updatechaozhong, [tknum])
+                        print("已经检查到第" + str(num) + "条为超重，单号为：" + tknum[0])
                         num += 1
-                    elif chazhi < -1 :
-                        cursor.execute(sql_setcheckweight, [tknum, order_weight, real_weight, chazhi, s, order_time])
-                        cursor.execute(sql_updatecheck, [tknum])
+                    elif chazhi < -1:
+                        cursor.execute(sql_setcheckweight, [tknum, ow, rw, chazhi, s, order_time])
+                        cursor.execute(sql_shaozhong, [tknum])
                         print("已经检查到第" + str(num) + "条为少重，单号为：" + tknum[0])
                         num += 1
 
                     else:
-                        cursor.execute(sql_updatecheck, [tknum])
+                        cursor.execute(sql_zhengchang, [tknum])
                         print("已经检查到第" + str(num) + "条为正常，单号为：" + tknum[0])
                         num += 1
                 elif len(s) == 0:
-                    cursor.execute(sql_updatecheck, [tknum])
+                    cursor.execute(sql_wudanhao, [tknum])
                     print(str(num) + "条单号被删除了，单号为：" + tknum[0])
+                    num += 1
+                elif s == "终止揽收":
+                    cursor.execute(sql_zhongzholanshou, [tknum])
+                    print("已经检查到第" + str(num) + "条为终止揽收，单号为：" + tknum[0])
+                    num += 1
+                elif s == "客户取消":
+                    cursor.execute(sql_kehuquxiao, [tknum])
+                    print("已经检查到第" + str(num) + "条为客户取消，单号为：" + tknum[0])
                     num += 1
                 else:
                     print(str(num) + "条还没出单呢！，单号为：" + tknum[0])
@@ -119,8 +127,12 @@ if __name__ == '__main__':
     sql_setcheckweight = 'insert ignore into CheckWeight(tknum,order_weight,real_weight,over_weight,status,order_time) values (%s, %s, %s, %s, %s, %s)'
     sql_selectnumbers = 'select tknum from OrderWeight where ischeck = "0"'
     sql_selectweight = 'select weight from OrderWeight where tknum = %s'
-    sql_updatecheck = 'update OrderWeight set ischeck = "1" where tknum = %s'
-    sql_updateNonum = 'update OrderWeight set ischeck = "无单号" where tknum = %s'
+    sql_updatechaozhong = 'update OrderWeight set ischeck = "超重" where tknum = %s'
+    sql_shaozhong = 'update OrderWeight set ischeck = "少重" where tknum = %s'
+    sql_zhengchang = 'update OrderWeight set ischeck = "正常" where tknum = %s'
+    sql_zhongzholanshou = 'update OrderWeight set ischeck = "终止揽收" where tknum = %s'
+    sql_kehuquxiao = 'update OrderWeight set ischeck = "客户取消" where tknum = %s'
+    sql_wudanhao = 'update OrderWeight set ischeck = "无单号" where tknum = %s'
     sql_selectordertime = 'select order_time from OrderWeight where tknum = %s'
 
     cursor.execute(sql_selectnumbers)
