@@ -21,7 +21,7 @@ class CrawlInfo1(Thread):
     def run(self):
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36 Edg/83.0.478.45",
-            "Cookie": "__stu=EDGESWa58EOuBAy3; __jdv=59982123|direct|-|none|-|1594349840739; __sts=EDGESWa58EOuBAy3|Wa6FKTr22TT; thor=12467F15FC83A299A0BBE831A76BB0D851AFDDFAD3447C608CE75A416493F6307EECCEDAB63E648C7698DDDC60E333EEF32FB21A9142F91577F73F6A50C5B83703DF065DA5FCF7019FA85BE8BBCB167B44F609B1104AF374BEC40C585F70EF054636FC14278C5143435E333E66EA4945C88A695F72E1FD63FA838712A3CF7A5F7E530526C1F28A96076313D8A0D55FDE44453BF907AE7B3B1A269641457B9AE3; pin=jd_ceRrROOyRMml; unick=jd_ceRrROOyRMml; __jda=59982123.15915962939721888410676.1591596294.1594733915.1594815996.56; __jdb=59982123.10.15915962939721888410676|56.1594815996; __jdc=59982123; JSESSIONID=F8FC0C2BA1D2AC5DECA2F93584AE58CD.s1"
+            "Cookie": "__stu=EDGESWa58EOuBAy3; 3AB9D23F7A4B3C9B=LWF5KQ5X4FZZDHIUUU45XC7F3O4I3HJKJ6QXJABGQBIZQWCIEWDOOXS3VDEJG5DBPV4YFQ4DKI32NYSNCWYZ3SSYTY; __jdv=59982123|direct|-|none|-|1594349840739; __sts=EDGESWa58EOuBAy3|Wa6FKTr22TT; thor=4B822A34398060C9DDFF106AB61596C2345BFF01C88793DBA05848784A2101EEF6C3C8651D2B32992620C8880A9208FDF7D19AF2F76366A67A44536C454849645F30CA87635CE9A64D08B5A6F04C70E4F90E59D9CBF650391A037CBEA6B33107D3DA7AEEE8CDC027D175844CCA00D3DC37D5B39EB11EAE5AC88F078ED5D9BFC1E8A673650AF4FDFF1A09B3BB152C27CE0447E1BB72FCA8E0A58E00DE0FED10FA; pin=jd_yLdWXAGUguiS; unick=jd_yLdWXAGUguiS; __jda=197855408.15915962939721888410676.1591596294.1594733915.1594815996.56; __jdc=197855408; __jdb=197855408.9.15915962939721888410676|56.1594815996; JSESSIONID=802D751CCF5CCEEAECA983786E1B4973.s1"
         }
         proxies = {
             "http": "http://0502fq1t1m:0502fq1t1m@59.55.158.225:65000",
@@ -124,16 +124,16 @@ if __name__ == '__main__':
                              db='JDWL')
     cursor = client.cursor()
 
-    sql_setcheckweight = 'insert ignore into CheckWeight_new3(tknum,order_weight,real_weight,over_weight,status,order_time) values (%s, %s, %s, %s, %s, %s)'
-    sql_selectnumbers = 'select tknum from OrderWeight_new3 where ischeck = "0"'
-    sql_selectweight = 'select weight from OrderWeight_new3 where tknum = %s'
-    sql_updatechaozhong = 'update OrderWeight_new3 set ischeck = "超重" where tknum = %s'
-    sql_shaozhong = 'update OrderWeight_new3 set ischeck = "少重" where tknum = %s'
-    sql_zhengchang = 'update OrderWeight_new3 set ischeck = "正常" where tknum = %s'
-    sql_zhongzholanshou = 'update OrderWeight_new3 set ischeck = "终止揽收" where tknum = %s'
-    sql_kehuquxiao = 'update OrderWeight_new3 set ischeck = "客户取消" where tknum = %s'
-    sql_wudanhao = 'update OrderWeight_new3 set ischeck = "无单号" where tknum = %s'
-    sql_selectordertime = 'select order_time from OrderWeight_new3 where tknum = %s'
+    sql_setcheckweight = 'insert ignore into CheckWeight_new4(tknum,order_weight,real_weight,over_weight,status,order_time) values (%s, %s, %s, %s, %s, %s)'
+    sql_selectnumbers = 'select tknum from OrderWeight_new4 where ischeck = "0"'
+    sql_selectweight = 'select weight from OrderWeight_new4 where tknum = %s'
+    sql_updatechaozhong = 'update OrderWeight_new4 set ischeck = "超重" where tknum = %s'
+    sql_shaozhong = 'update OrderWeight_new4 set ischeck = "少重" where tknum = %s'
+    sql_zhengchang = 'update OrderWeight_new4 set ischeck = "正常" where tknum = %s'
+    sql_zhongzholanshou = 'update OrderWeight_new4 set ischeck = "终止揽收" where tknum = %s'
+    sql_kehuquxiao = 'update OrderWeight_new4 set ischeck = "客户取消" where tknum = %s'
+    sql_wudanhao = 'update OrderWeight_new4 set ischeck = "无单号" where tknum = %s'
+    sql_selectordertime = 'select order_time from OrderWeight_new4 where tknum = %s'
 
     cursor.execute(sql_selectnumbers)
     select_numbers = cursor.fetchall()

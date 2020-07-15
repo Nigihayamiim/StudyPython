@@ -95,10 +95,10 @@ while True:
     while not shop_url_queue.empty():
         shop_url = shop_url_queue.get()
         try:
-            response = requests.get(shop_url, headers=headers, proxies=proxies)
+            response = requests.get(shop_url, headers=headers)
         except Exception:
             print("第" + str(count) + "条数据出现超时,尝试再次连接")
-            response = requests.get(shop_url, headers=headers, proxies=proxies)
+            response = requests.get(shop_url, headers=headers)
         code = response.status_code
         print("这是第" + str(count) + "条数据,地址为:" + shop_url)
         sleep(randint(0, 1))
