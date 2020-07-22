@@ -21,7 +21,7 @@ class CrawlInfo1(Thread):
     def run(self):
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36 Edg/83.0.478.45",
-            "Cookie": "__stu=EDGESWa58EOuBAy3; 3AB9D23F7A4B3C9B=LWF5KQ5X4FZZDHIUUU45XC7F3O4I3HJKJ6QXJABGQBIZQWCIEWDOOXS3VDEJG5DBPV4YFQ4DKI32NYSNCWYZ3SSYTY; __jdv=59982123|direct|-|none|-|1594349840739; __sts=EDGESWa58EOuBAy3|Wa6JLCrDUze; thor=4B822A34398060C9DDFF106AB61596C2345BFF01C88793DBA05848784A2101EE11302BE1507232A9B9A22566A6B2F84B820ABBE9DEB6D1C86059B6B25428C16445B195710E903A4C3051A2A5D46CBC831946AA4F978618072BFB29B9A77B7B1A003AB38DAAC2A92529896F3326C597D73A496F4862A6358FCB34832C6FB11143E31D6E0648F7794BE86C4C5FB6236E45D2516B7FF18B9AC4C69FA59B8A134520; pin=jd_yLdWXAGUguiS; unick=jd_yLdWXAGUguiS; __jda=197855408.15915962939721888410676.1591596294.1595129626.1595163892.60; __jdc=197855408; __jdb=197855408.17.15915962939721888410676|60.1595163892; JSESSIONID=D7898714D9FAA6A4E472B8F4D0E25BB5.s1"
+            "Cookie": "__stu=EDGESWa58EOuBAy3; 3AB9D23F7A4B3C9B=LWF5KQ5X4FZZDHIUUU45XC7F3O4I3HJKJ6QXJABGQBIZQWCIEWDOOXS3VDEJG5DBPV4YFQ4DKI32NYSNCWYZ3SSYTY; __jdv=59982123|direct|-|none|-|1594349840739; thor=B312B8A284476B56CAD34D789FE505764D9AC2D3D17605B0842A9AC253A01A36426E90D4DD65C1B8303CC18D2CCEF19051D50FFCAE8BFCCFBF048E685FAF00FFF8AD94753B3EE291F60E6CB81151B51FD8AA2BB93C501FEAF1635A9BA49C4461DD37C998A61E3982710377C5B5AFC874018B8532168DC47BC89914D3C6DBB67A9CFE8D973927BA0F00BD5DA711BB366DD65FAAD8ACA150272AE431722790663D; pin=jd_EyrEhvUqbreC; unick=jd_EyrEhvUqbreC; __sts=EDGESWa58EOuBAy3|Wa6MI7n2NKL; __jda=197855408.15915962939721888410676.1591596294.1595163892.1595412389.61; __jdc=197855408; JSESSIONID=32E56B8AA9F439D5D6473C4A765D88E7.s1"
         }
         proxies = {
             "http": "http://0502fq1t1m:0502fq1t1m@59.55.158.225:65000",
@@ -76,13 +76,16 @@ class CrawlInfo1(Thread):
                     cursor.execute(sql_selectordertime, [tknum])
                     order_time = cursor.fetchall()
 
+                    cursor.execute(sql_selectorderper, [tknum])
+                    order_per = cursor.fetchall()
+
                     if chazhi > 0:
-                        cursor.execute(sql_setcheckweight, [tknum, ow, rw, chazhi, s, order_time])
+                        cursor.execute(sql_setcheckweight, [tknum, ow, rw, chazhi, s, order_time, order_per])
                         cursor.execute(sql_updatechaozhong, [tknum])
                         print("已经检查到第" + str(num) + "条为超重，单号为：" + tknum[0])
                         num += 1
                     elif chazhi < -1:
-                        cursor.execute(sql_setcheckweight, [tknum, ow, rw, chazhi, s, order_time])
+                        cursor.execute(sql_setcheckweight, [tknum, ow, rw, chazhi, s, order_time, order_per])
                         cursor.execute(sql_shaozhong, [tknum])
                         print("已经检查到第" + str(num) + "条为少重，单号为：" + tknum[0])
                         num += 1
@@ -124,16 +127,17 @@ if __name__ == '__main__':
                              db='JDWL')
     cursor = client.cursor()
 
-    sql_setcheckweight = 'insert ignore into CheckWeight_new4(tknum,order_weight,real_weight,over_weight,status,order_time) values (%s, %s, %s, %s, %s, %s)'
-    sql_selectnumbers = 'select tknum from OrderWeight_new4 where ischeck = "0"'
-    sql_selectweight = 'select weight from OrderWeight_new4 where tknum = %s'
-    sql_updatechaozhong = 'update OrderWeight_new4 set ischeck = "超重" where tknum = %s'
-    sql_shaozhong = 'update OrderWeight_new4 set ischeck = "少重" where tknum = %s'
-    sql_zhengchang = 'update OrderWeight_new4 set ischeck = "正常" where tknum = %s'
-    sql_zhongzholanshou = 'update OrderWeight_new4 set ischeck = "终止揽收" where tknum = %s'
-    sql_kehuquxiao = 'update OrderWeight_new4 set ischeck = "客户取消" where tknum = %s'
-    sql_wudanhao = 'update OrderWeight_new4 set ischeck = "无单号" where tknum = %s'
-    sql_selectordertime = 'select order_time from OrderWeight_new4 where tknum = %s'
+    sql_setcheckweight = 'insert ignore into CheckWeight_tixiang(tknum,order_weight,real_weight,over_weight,status,order_time, order_per) values (%s, %s, %s, %s, %s, %s, %s)'
+    sql_selectnumbers = 'select tknum from OrderWeight_tixiang where ischeck = "0" and order_per = "小强-提象"'
+    sql_selectweight = 'select weight from OrderWeight_tixiang where tknum = %s'
+    sql_updatechaozhong = 'update OrderWeight_tixiang set ischeck = "超重" where tknum = %s'
+    sql_shaozhong = 'update OrderWeight_tixiang set ischeck = "少重" where tknum = %s'
+    sql_zhengchang = 'update OrderWeight_tixiang set ischeck = "正常" where tknum = %s'
+    sql_zhongzholanshou = 'update OrderWeight_tixiang set ischeck = "终止揽收" where tknum = %s'
+    sql_kehuquxiao = 'update OrderWeight_tixiang set ischeck = "客户取消" where tknum = %s'
+    sql_wudanhao = 'update OrderWeight_tixiang set ischeck = "无单号" where tknum = %s'
+    sql_selectordertime = 'select order_time from OrderWeight_tixiang where tknum = %s'
+    sql_selectorderper = 'select order_per from OrderWeight_tixiang where tknum = %s'
 
     cursor.execute(sql_selectnumbers)
     select_numbers = cursor.fetchall()

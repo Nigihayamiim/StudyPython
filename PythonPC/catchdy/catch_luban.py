@@ -52,15 +52,15 @@ sleep(randint(1, 2))
 driver.find_element_by_xpath('//a[@href="/goods/hot"]/li/span').click()
 sleep(randint(6, 10))
 
-# driver.find_element_by_xpath('//div[1]/div/button[2]').click()
-# sleep(randint(5, 6))
+driver.find_element_by_xpath('//div[1]/div/button[2]').click()
+sleep(randint(5, 6))
 
-driver.find_element_by_xpath('//input[@placeholder="开始日期"]').click()
-sleep(randint(1, 2))
+# driver.find_element_by_xpath('//input[@placeholder="开始日期"]').click()
+# sleep(randint(1, 2))
 
 # driver.find_element_by_xpath('/html/body/div[3]/div[1]/div[1]/button[1]').click()
-driver.find_element_by_xpath('/html/body/div[3]/div[1]/div[1]/button[3]').click()
-sleep(randint(6, 10))
+# driver.find_element_by_xpath('/html/body/div[3]/div[1]/div[1]/button[3]').click()
+# sleep(randint(6, 10))
 
 page = 1
 num = 1
@@ -126,4 +126,4 @@ while True:
 
     driver.find_element_by_xpath('//button[@class="btn-next"]').click()
     page += 1
-    sleep(randint(6, 12))
+    sleep(randint(3, 5))
