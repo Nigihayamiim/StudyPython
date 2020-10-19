@@ -10,18 +10,24 @@ import requests
 from fake_useragent import UserAgent
 
 from PythonPC.IntoExcel.forExcel import write_excel
+import pymysql as pymysql
+import time
+import tkinter as tk
+
+from PythonPC.MachWeight_tixiang.forExcel import write_excel
 
 
 class CrawlInfo1(Thread):
-    def __init__(self, tracking_numbers, JD_url):
+    def __init__(self, tracking_numbers, JD_url, cookie):
         Thread.__init__(self)
         self.tk_nums = tracking_numbers
         self.url = JD_url
+        self.cookies = cookie
 
     def run(self):
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36 Edg/83.0.478.45",
-            "Cookie": "__stu=EDGESWa58EOuBAy3; 3AB9D23F7A4B3C9B=LWF5KQ5X4FZZDHIUUU45XC7F3O4I3HJKJ6QXJABGQBIZQWCIEWDOOXS3VDEJG5DBPV4YFQ4DKI32NYSNCWYZ3SSYTY; __jdv=232640857|www.jdl.cn|-|referral|-|1601382741758; __sts=EDGESWa58EOuBAy3|Wa9EJfxBcbd; JSESSIONID=7E2E7FA9C78B7B493ECB8917126F7507.s1; thor=C9C2876A4E30A11E064E419A89F53AB28B7806901D27425274D2264F855834901369F254A7926A566E0EDC6AD6703EF3166284338532FC6C8CCC4772306E9EB3D67257F6960B032F0CB3EB2EE56B31F3AC1628FD66D99C3C7EE57020AC2A733259BF9B7DF237DA745EE108FB10A9DAD056AF581F8BDE6F23C9FD369943DB735E9299038E9277832A3CE9937AA11F1362C20354356003BBA8419F25DA95325E6F; pin=jd_ZpYJXyLqEWnv; unick=jd_ZpYJXyLqEWnv; __jda=234118157.15915962939721888410676.1591596294.1602582128.1602675720.140; __jdb=234118157.7.15915962939721888410676|140.1602675720; __jdc=234118157"
+            "Cookie": self.cookies
         }
         proxies = {
             "http": "http://0502fq1t1m:0502fq1t1m@59.55.158.225:65000",
@@ -114,6 +120,10 @@ class CrawlInfo1(Thread):
 
 if __name__ == '__main__':
 
+
+    cookie = input("请输入cookie：")
+
+
     JD_url = "https://biz-wb.jdwl.com/business/waybillmanage/toDeliveryDetail"
     tracking_numbers = Queue()
 
@@ -145,10 +155,30 @@ if __name__ == '__main__':
         tracking_numbers.put(tk_num)
 
 
-    crawl1 = CrawlInfo1(tracking_numbers, JD_url)
+    crawl1 = CrawlInfo1(tracking_numbers, JD_url, cookie)
     crawl1.start()
     crawl1.join()
 
 
     cursor.close()
     client.close()
+
+    print("核重完毕！")
+
+    time.sleep(10)
+
+    date = time.strftime("%Y-%m-%d", time.localtime())
+    dates = date + "%"
+    filename = date + "张英全国超重少重统计.xls"
+
+    conn = pymysql.connect(host='49.233.3.208', port=3306, user='root', password='x1113822624', charset='utf8',
+                           db='JDWL')
+    cursor = conn.cursor()
+    sql_realweight = 'select * from CheckWeight_zhangying where check_time like %s'
+    cursor.execute(sql_realweight, [dates])
+    datas = cursor.fetchall()
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    write_excel(datas, filename, date)
