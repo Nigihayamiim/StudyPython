@@ -48,10 +48,12 @@ def write_excel(datas,filename,date):
     data_sheet.col(5).width = 6000
     data_sheet.col(6).width = 5000
     data_sheet.col(7).width = 5000
+    data_sheet.col(8).width = 3500
+    data_sheet.col(9).width = 3500
 
     # ----------------------------------------------------
 
-    row0 = [u'单号', '下单人', u'下单重量', '实际重量', '超重重量', '状态', '下单时间', '检查时间']
+    row0 = [u'单号', '下单人', u'下单重量', '实际重量', '超重重量', '状态', '下单时间', '检查时间', '寄件人', '收件人']
     for i in range(len(row0)):
         data_sheet.write(0, i, row0[i], style)
     nrows=len(datas)
@@ -64,4 +66,4 @@ def write_excel(datas,filename,date):
                 data_sheet.write(i+1, j, datas[i][j], style)
 
     # 工作簿保存到磁盘
-    workbook.save("C:\\Users\\WaitingForTheName\\Desktop\\" + filename)
+    workbook.save(filename)

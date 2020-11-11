@@ -63,4 +63,4 @@ def write_excel(datas,filename,date):
                 data_sheet.write(i+1, j, datas[i][j], style)
 
     # 工作簿保存到磁盘
-    workbook.save("C:\\Users\\WaitingForTheName\\Desktop\\" + filename)
+    workbook.save(filename)
